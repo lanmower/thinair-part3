@@ -14,7 +14,7 @@ const AppRouter = props => {
         <Router>
           <Switch>
             <Route exact path="/" component={Home} {...props} />
-            <Route exact path="/chat/:_id" component={Chat} {...props} />
+            <Route exact path="/chat/:author/:permlink" component={Chat} {...props} />
           </Switch>
         </Router>
     </div>

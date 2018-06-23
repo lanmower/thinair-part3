@@ -11,6 +11,7 @@
     "@babel/runtime": "^7.0.0-beta.51",
     "@material-ui/core": "^1.2.1",
     "@material-ui/icons": "^1.1.0",
+    "bufferutil": "^3.0.5",
     "material-ui": "^0.20.1",
     "meteor-node-stubs": "^0.4.1",
     "react": "^16.4.1",
@@ -18,6 +19,7 @@
     "react-meteor-data": "^0.2.11",
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
+    "remarkable": "^1.7.1",
     "steem": "^0.7.1",
     "typeface-roboto": "0.0.54"
   },
