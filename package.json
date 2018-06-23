@@ -1,0 +1,31 @@
+{
+  "name": "thinair-part1",
+  "private": true,
+  "scripts": {
+    "start": "meteor run",
+    "test": "meteor test --once --driver-package meteortesting:mocha",
+    "test-app": "TEST_WATCH=1 meteor test --full-app --driver-package meteortesting:mocha",
+    "visualize": "meteor --production --extra-packages bundle-visualizer"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.0.0-beta.51",
+    "@material-ui/core": "^1.2.1",
+    "@material-ui/icons": "^1.1.0",
+    "material-ui": "^0.20.1",
+    "meteor-node-stubs": "^0.4.1",
+    "react": "^16.4.1",
+    "react-dom": "^16.4.1",
+    "react-meteor-data": "^0.2.11",
+    "react-router": "^4.3.1",
+    "react-router-dom": "^4.3.1",
+    "steem": "^0.7.1",
+    "typeface-roboto": "0.0.54"
+  },
+  "meteor": {
+    "mainModule": {
+      "client": "client/main.js",
+      "server": "server/main.js"
+    },
+    "testModule": "test/main.js"
+  }
+}
