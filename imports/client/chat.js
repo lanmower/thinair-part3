@@ -23,7 +23,7 @@ class Chat extends React.Component {
     {
       const rendered = remarkable.render(comment.body);
       return (
-        <div key={comment.permlink} style={{width:"800px", marginLeft:"auto", marginRight:"auto"}}>
+        <div key={comment.permlink} style={{borderBottom: "solid", width:"800px", marginLeft:"auto", marginRight:"auto"}}>
           <b>{comment.author}</b>:<span dangerouslySetInnerHTML={{ __html: rendered }}></span >
         </div>
       )
