@@ -32,16 +32,15 @@ class Chat extends React.Component {
       )
     }
 
-    window.scrollTo(0,document.body.scrollHeight);
     return (
       <div>
         {
           (replies && replies.length) ?
           <div style={{color: "#aab", width:"800px", marginLeft:"auto", marginRight:"auto"}}>
+          <CommentForm author={this.props.author} permlink={this.props.permlink}/>
             {
-              replies.map(drawComment)
+              replies.reverse().map(drawComment)
             }
-            <CommentForm author={this.props.author} permlink={this.props.permlink}/>
           </div>
           :
           <div>
