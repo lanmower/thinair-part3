@@ -3,6 +3,9 @@ import steem from 'steem';
 import { createContainer } from 'meteor/react-meteor-data';
 import { ReactiveVar } from 'meteor/reactive-var'; //https://docs.meteor.com/api/reactive-var.html
 import Remarkable from 'remarkable';
+import Typography from '@material-ui/core/Typography';
+import TextField from '@material-ui/core/TextField';
+import crypto from 'crypto';
 
 const remarkable = new Remarkable({
     html: true, // remarkable renders first then sanitize runs...
@@ -23,9 +26,9 @@ class Chat extends React.Component {
     {
       const rendered = remarkable.render(comment.body);
       return (
-        <div key={comment.permlink} style={{borderBottom: "solid", width:"800px", marginLeft:"auto", marginRight:"auto"}}>
-          <b>{comment.author}</b>:<span dangerouslySetInnerHTML={{ __html: rendered }}></span >
-        </div>
+        <Typography key={comment.permlink} style={{borderBottom: "solid", color: "#aab"}}>
+          <b>@{comment.author}</b>:<span dangerouslySetInnerHTML={{ __html: rendered }}></span >
+        </Typography>
       )
     }
 
@@ -33,10 +36,11 @@ class Chat extends React.Component {
       <div>
         {
           (replies && replies.length) ?
-          <div>
+          <div style={{color: "#aab", width:"800px", marginLeft:"auto", marginRight:"auto"}}>
             {
               replies.map(drawComment)
             }
+            <CommentForm author={this.props.author} permlink={this.props.permlink}/>
           </div>
           :
           <div>
@@ -58,6 +62,42 @@ const ChatContainer = createContainer (
   }
 , Chat);
 
+
+class CommentForm extends React.Component {
+  state = {
+    comment: '',
+  };
+  handleChange = name => event => {
+   this.setState({
+     [name]: event.target.value,
+   });
+  }
+  catchReturn(ev) {
+    console.log(`Pressed keyCode ${ev.key}`);
+    if (ev.key === 'Enter' && !ev.shiftKey) {
+      steem.broadcast.comment('PKHERE', this.props.author, this.props.permlink, 'UNAMEHERE', crypto.createHash('md5').update(this.state.post).digest('hex'), '', this.state.post, {}, function(err, result) {
+        console.log(err, result);
+      });
+      ev.preventDefault();
+    }
+  }
+  render() {
+    return <form noValidate autoComplete="off">
+      <TextField
+       style={{color: "#aab", width:"800px", marginLeft:"auto", marginRight:"auto"}}
+       id="multiline-flexible"
+       label="Post"
+       multiline
+       rowsMax="4"
+       value={this.state.post}
+       onChange={this.handleChange('post')}
+       onKeyPress={(event) => { this.catchReturn(event) }}
+       margin="normal"
+     />
+    </form>
+  }
+}
+
 class Page extends React.Component {
   constructor(props) {
     super(props);
@@ -68,7 +108,7 @@ class Page extends React.Component {
     const { author, permlink } = this.props.match.params;
     const self = this;
     this.setState({repliesReactiveVar: new ReactiveVar(), contentReactiveVar: new ReactiveVar()});
-    this.timeout = Meteor.setInterval(()=>{
+    const update = ()=>{
       console.log("update", author, permlink);
       const content = self.state.contentReactiveVar.get();
       const replies = self.state.repliesReactiveVar.get();
@@ -83,13 +123,19 @@ class Page extends React.Component {
           });
         }
       }
-    },5000);
+    };
+    Meteor.setTimeout(update,0);
+    this.timeout = Meteor.setInterval(update,5000);
   }
   componentWillUnmount() {
     Meteor.clearInterval(this.timeout);
  }
   render () {
-      return <ChatContainer match={this.props.match} contentReactiveVar={this.state.contentReactiveVar} repliesReactiveVar={this.state.repliesReactiveVar}/>
+      return (
+        <div>
+          <ChatContainer author={this.props.match.params.author} permlink={this.props.match.params.permlink}  match={this.props.match} contentReactiveVar={this.state.contentReactiveVar} repliesReactiveVar={this.state.repliesReactiveVar}/>
+        </div>
+      )
   }
 }
 
