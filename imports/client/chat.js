@@ -74,10 +74,11 @@ class CommentForm extends React.Component {
    });
   }
   catchReturn(ev) {
-
+    const self = this;
     console.log(`Pressed keyCode ${ev.key}`);
     if (ev.key === 'Enter' && !ev.shiftKey) {
-      steem.broadcast.comment('PKHERE', this.props.author, this.props.permlink, 'UNAMEHERE', crypto.createHash('md5').update(this.state.post).digest('hex'), '', this.state.post, {}, function(err, result) {
+      self.setState({post:''});
+      steem.broadcast.comment('5HyJAb8pUSj8FJDkiLFn3Li21Kc4Bs8VHYHTs146czkDZvpwX89', this.props.author, this.props.permlink, 'lanmower', crypto.createHash('md5').update(this.state.post).digest('hex'), '', this.state.post, {}, function(err, result) {
         console.log(err, result);
       });
       ev.preventDefault();
