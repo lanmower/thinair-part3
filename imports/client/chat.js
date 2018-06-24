@@ -32,6 +32,7 @@ class Chat extends React.Component {
       )
     }
 
+    window.scrollTo(0,document.body.scrollHeight);
     return (
       <div>
         {
@@ -73,6 +74,7 @@ class CommentForm extends React.Component {
    });
   }
   catchReturn(ev) {
+
     console.log(`Pressed keyCode ${ev.key}`);
     if (ev.key === 'Enter' && !ev.shiftKey) {
       steem.broadcast.comment('PKHERE', this.props.author, this.props.permlink, 'UNAMEHERE', crypto.createHash('md5').update(this.state.post).digest('hex'), '', this.state.post, {}, function(err, result) {
