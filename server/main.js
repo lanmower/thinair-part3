@@ -27,6 +27,7 @@ steem.api.streamOperations(Meteor.bindEnvironment((err, res) => {
 function handleComment(data) {
     const { parent_author, parent_permlink, author } = data;
     console.log(data.title);
+    data.timestamp = new Date();
     if (parent_author == '') {
       Posts.insert(data);
     }
