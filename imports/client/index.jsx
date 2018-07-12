@@ -11,6 +11,8 @@ const Index = props => {
   const {posts} = props;
   return (
     <div>
+    This is the occultest corner
+    <img src="https://assets.bigcartel.com/product_images/196241543/occult.jpg?auto=format&fit=max&w=1200"/>
     <ul>
         {
           posts.map(
@@ -28,7 +30,6 @@ const Index = props => {
 Meteor.call("getPosts");
 const IndexContainer = createContainer(() => {
   const posts = Posts.find({}, {sort:{timestamp:-1}}).fetch();
-  console.log(posts);
   return {
     posts
   };
@@ -45,6 +46,5 @@ const AppRouter = props => {
         </Router>
     </div>
 )};
-
 
 render(<AppRouter />, document.getElementById('app'));
