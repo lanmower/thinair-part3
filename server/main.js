@@ -12,14 +12,17 @@ Meteor.methods({
 });
 
 Meteor.setInterval(()=>{
-  Posts.remove({});
   var query = {
-    tag: 'occult',
     limit: 10
   };
   steem.api.getDiscussionsByTrendingAsync(query).then(Meteor.bindEnvironment((response)=>{
+    const permlinks = []
     for(x in response) {
-      Posts.insert(response[x]);
+      permlinks.push(response[x].permlink)
+    }
+    Posts.remove({permlink:{$nin:permlinks}});
+    for(x in response) {
+      if(!Posts.findOne({permlink:response[x].permlink})) Posts.insert(response[x]);
     }
   }));
 },10000)
