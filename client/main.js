@@ -1,4 +1,4 @@
 import './main.html';
 Meteor.startup(() => {
-    require('../imports/client');
+    require('../imports/client/index.jsx');
 });
