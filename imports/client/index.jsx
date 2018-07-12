@@ -4,7 +4,14 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { createContainer } from 'meteor/react-meteor-data';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { render } from 'react-dom';
-import Home from './home.jsx';
+
+const Index = props => {
+  return (
+    <div>
+        Hello World!
+    </div>
+)};
+
 
 const AppRouter = props => {
   return (
@@ -12,7 +19,7 @@ const AppRouter = props => {
         <CssBaseline />
         <Router>
           <Switch>
-            <Route exact path="/" component={Home} {...props} />
+            <Route exact path="/" component={Index} {...props} />
           </Switch>
         </Router>
     </div>
