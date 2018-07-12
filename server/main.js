@@ -15,7 +15,7 @@ Meteor.setInterval(()=>{
   var query = {
     limit: 10
   };
-  steem.api.getDiscussionsByTrendingAsync(query).then(Meteor.bindEnvironment((response)=>{
+  steem.api.getDiscussionsByCreatedAsync(query).then(Meteor.bindEnvironment((response)=>{
     const permlinks = []
     for(x in response) {
       permlinks.push(response[x].permlink)
