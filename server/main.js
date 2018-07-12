@@ -8,15 +8,18 @@ Meteor.startup(() => {
 
 Meteor.methods({
   "getPosts"(){
-    Posts.remove({});
-    var query = {
-      tag: 'introduceyourself',
-      limit: 10
-    };
-    steem.api.getDiscussionsByTrendingAsync(query).then(Meteor.bindEnvironment((response)=>{
-    	for(x in response) {
-    		Posts.insert(response[x]);
-    	}
-    }));
   }
 });
+
+Meteor.setInterval(()=>{
+  Posts.remove({});
+  var query = {
+    tag: 'occult',
+    limit: 10
+  };
+  steem.api.getDiscussionsByTrendingAsync(query).then(Meteor.bindEnvironment((response)=>{
+    for(x in response) {
+      Posts.insert(response[x]);
+    }
+  }));
+},10000)
