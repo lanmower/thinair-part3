@@ -27,7 +27,7 @@ const Index = props => {
 
 Meteor.call("getPosts");
 const IndexContainer = createContainer(() => {
-  const posts = Posts.find({}).fetch();
+  const posts = Posts.find({}, {sort:{created:-1}}).fetch();
   console.log(posts);
   return {
     posts
