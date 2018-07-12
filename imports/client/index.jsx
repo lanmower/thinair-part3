@@ -38,7 +38,6 @@ const IndexContainer = createContainer(() => {
 const AppRouter = props => {
   return (
     <div>
-        <CssBaseline />
         <Router>
           <Switch>
             <Route exact path="/" component={IndexContainer} {...props} />

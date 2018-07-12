@@ -2,14 +2,6 @@ import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 import steem from 'steem';
 const Posts = new Mongo.Collection('posts');
-Meteor.startup(() => {
-  // code to run on server at startup
-});
-
-Meteor.methods({
-  "getPosts"(){
-  }
-});
 
 steem.api.streamOperations(Meteor.bindEnvironment((err, res) => {
   if (!res) return;
