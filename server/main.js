@@ -11,18 +11,23 @@ Meteor.methods({
   }
 });
 
-Meteor.setInterval(()=>{
-  var query = {
-    limit: 10
-  };
-  steem.api.getDiscussionsByCreatedAsync(query).then(Meteor.bindEnvironment((response)=>{
-    const permlinks = []
-    for(x in response) {
-      permlinks.push(response[x].permlink)
+steem.api.streamOperations(Meteor.bindEnvironment((err, res) => {
+  if (!res) return;
+  const opType = res[0];
+  const op = res[1];
+  switch (opType) {
+    case 'comment':
+    handleComment(op);
+    break;
+    default:
+    break;
+  }
+}));
+
+function handleComment(data) {
+    const { parent_author, parent_permlink, author } = data;
+    console.log(data.title);
+    if (parent_author == '') {
+      Posts.insert(data);
     }
-    Posts.remove({permlink:{$nin:permlinks}});
-    for(x in response) {
-      if(!Posts.findOne({permlink:response[x].permlink})) Posts.insert(response[x]);
-    }
-  }));
-},3000)
+}
