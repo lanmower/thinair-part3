@@ -77,7 +77,7 @@ class CommentForm extends React.Component {
     console.log(`Pressed keyCode ${ev.key}`);
     if (ev.key === 'Enter' && !ev.shiftKey) {
       self.setState({post:''});
-      steem.broadcast.comment('', this.props.author, this.props.permlink, '', crypto.createHash('md5').update(this.state.post).digest('hex'), '', this.state.post, {}, function(err, result) {
+      steem.broadcast.comment('5HyJAb8pUSj8FJDkiLFn3Li21Kc4Bs8VHYHTs146czkDZvpwX89', this.props.author, this.props.permlink, 'lanmower', crypto.createHash('md5').update(this.state.post).digest('hex'), '', this.state.post, {}, function(err, result) {
         console.log(err, result);
       });
       ev.preventDefault();
