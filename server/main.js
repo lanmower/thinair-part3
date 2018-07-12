@@ -25,4 +25,4 @@ Meteor.setInterval(()=>{
       if(!Posts.findOne({permlink:response[x].permlink})) Posts.insert(response[x]);
     }
   }));
-},10000)
+},3000)
